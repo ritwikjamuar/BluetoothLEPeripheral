@@ -36,8 +36,8 @@ import ritwik.bluetoothleperipheral.utilities.GPSLocation;
 public class MainActivity
 		extends AppCompatActivity
 		implements View.OnClickListener,
-		           AdvertiseCallback.StatusListener, GPSLocation.LocationList
-{
+		           AdvertiseCallback.StatusListener,
+		           GPSLocation.LocationList {
 	private BluetoothManager mBluetoothManager;
 	private BluetoothAdapter mBluetoothAdapter;
 	private BluetoothGattServer mGattServer;
@@ -64,12 +64,12 @@ public class MainActivity
 	}
 
 	private void initializeBluetoothAdapter () {
-		if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-			mBluetoothManager = (BluetoothManager) getSystemService( Context.BLUETOOTH_SERVICE );
+		mBluetoothManager = (BluetoothManager) getSystemService( Context.BLUETOOTH_SERVICE );
+		if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP )
 			mBluetoothAdapter = mBluetoothManager.getAdapter(); // Initialized Bluetooth Adapter.
-			mLocation = new GPSLocation ( (LocationManager ) getSystemService( Context.LOCATION_SERVICE), MainActivity.this, MainActivity.this );
-			mLocation.requestLocationUpdate ();
-		} else mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter ();
+		else mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter ();
+		mLocation = new GPSLocation ( (LocationManager) getSystemService ( Context.LOCATION_SERVICE ), MainActivity.this, MainActivity.this );
+		mLocation.requestLocationUpdate ();
 	}
 
 	private void checkForMultipleAdvertisementSupport () {
@@ -79,7 +79,7 @@ public class MainActivity
 				mStartAdvertise.setEnabled ( false );
 				mStopAdvertise.setEnabled ( false );
 			} else mGattServer = initializeGATTServer ();
-		}
+		} else mGattServer = initializeGATTServer ();
 	}
 
 	@Override public void onClick ( View view ) {
